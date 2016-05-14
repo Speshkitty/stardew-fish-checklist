@@ -2,11 +2,16 @@
 <html>
   <head>
     <title>Stardew Fish List</title>
-    <script src="/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>Stardew FishList</h1>
-    <p>Welcome to <%= title %></p>
+    <h1>Stardew Fish List</h1>
+    <p>Welcome to Stardew Fish List</p>
+    <main id="app"></main>
+
+    <!-- Load in the Web Component -->
+    <script src="/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="/components/fish.html">
+    <script src="/javascripts/loadApp.js"></script>
   </body>
 </html>

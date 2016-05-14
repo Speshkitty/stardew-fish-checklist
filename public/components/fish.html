@@ -1,0 +1,36 @@
+<!-- Imports polymer -->
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<!-- Defines element markup -->
+<dom-module id="fish-component">
+    <template>
+        <style>
+            * {
+                border: 1px solid #ccc;
+            }
+            .wrapper {
+                display: inline-block;
+                height: 4em;
+                width: 8em;
+
+                margin: 3px;
+                text-align: center;
+                vertical-align: top;
+                word-wrap: break-word;
+            }
+        </style>
+        <div class="wrapper">
+            {{name}}
+        </div>
+    </template>
+</dom-module>
+
+<!-- Registers custom element -->
+<script>
+    Polymer({
+        is: 'fish-component',
+        properties: {
+            name: String
+        }
+    });
+</script>
