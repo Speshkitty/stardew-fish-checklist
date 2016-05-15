@@ -1,0 +1,63 @@
+<!-- Imports polymer -->
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<!-- Defines element markup -->
+<dom-module id="fish-location-component">
+    <template>
+        <style>
+
+            :host {
+                border-bottom: 1px solid #ccc;
+                display: inline-block;
+                width: 10em;
+
+                margin: 3px;
+                text-align: center;
+                vertical-align: top;
+                word-wrap: break-word;
+            }
+        </style>
+        <div>{{location}} {{time}}</div>
+        <div>{{weatherText}}</div>
+    </template>
+</dom-module>
+
+<!-- Registers custom element -->
+<script>
+    Polymer({
+        is: 'fish-location-component',
+        properties: {
+            spring: Boolean,
+            summer: Boolean,
+            fall: Boolean,
+            winter: Boolean,
+            time: String,
+            weather: String,
+            location: String,
+            weatherText: {
+                type: String,
+                computed: 'computeWeatherText(spring, summer, fall, winter)'
+            }
+        },
+        computeWeatherText: function(spring, summer, fall, winter) {
+
+            if (spring && summer && fall && winter) {
+                return 'All Seasons';
+            }
+
+            let seasons = {
+                spring,
+                summer,
+                fall,
+                winter
+            };
+
+            return Object.keys(seasons).reduce(function(memo, season) {
+                if (seasons[season]) {
+                    memo += ` ${season}`;
+                }
+                return memo;
+            }, '');
+        }
+    });
+</script>
