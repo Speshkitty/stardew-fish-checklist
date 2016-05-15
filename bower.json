@@ -10,7 +10,7 @@
     "Stardew",
     "Fishing"
   ],
-  "license": "MIT",
+  "license": "BSD",
   "private": true,
   "dependencies": {
     "polymer": "Polymer/polymer#~1.4.0"

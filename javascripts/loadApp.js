@@ -18,7 +18,7 @@ function load(url) {
 function loadFishes() {
 
   return new Promise(function(resolve, reject) {
-    load('/data/fishes.json')
+    load('./data/fishes.json')
       .then(function(response) {
         resolve(response);
       });
@@ -28,7 +28,7 @@ function loadFishes() {
 function loadFishLocations() {
 
   return new Promise(function(resolve, reject) {
-    load('/data/fish_locations.json')
+    load('./data/fish_locations.json')
       .then(function(response) {
         resolve(response);
       });
