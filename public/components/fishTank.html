@@ -1,0 +1,69 @@
+<!-- Imports polymer -->
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/components/fish.html">
+
+<!-- Defines element markup -->
+<dom-module id="fish-tank-component">
+    <template>
+        <style></style>
+
+        <div>
+            <label>
+                Summer
+                <input value="false" checked="{{isSummer::change}}" type="checkbox">
+            </label>
+            <label>
+                Winter
+                <input value="false" checked="{{isWinter::change}}" type="checkbox">
+            </label>
+        </div>
+        <template is="dom-repeat" items="{{fishes}}" as="fish" filter="{{computeFilter(isSummer, isWinter)}}">
+            <fish-component
+                name="{{fish.name}}"
+                locations="{{fish.locations}}"></fish-component>
+        </template>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: 'fish-tank-component',
+        properties: {
+            fishes: Array,
+            isSummer: {
+                value: false,
+                notify: true
+            },
+
+            // I ran into a peculiar bug where changing isWinter using the input did not do anything until isSummer
+            // changed. The "Fix" involves using the notify flag to setup 2-way binding.
+            // Checkout: https://www.polymer-project.org/1.0/docs/devguide/data-binding.html#two-way-native
+            isWinter: {
+                value: false,
+                notify: true
+            }
+        },
+        computeFilter: function(isSummer, isWinter) {
+
+            // If we aren't filtering anything, return null, which returns the full set.
+            if (!isSummer && !isWinter) {
+                return null;
+            }
+
+            // Otherwise, filter away!
+            return function (fish) {
+                return fish.locations.some(function(location) {
+                    if (location.summer && isSummer) {
+                        return true;
+                    }
+
+                    if (location.winter && isWinter) {
+                        return true;
+                    }
+
+                    return false;
+                });
+            }
+        }
+    });
+</script>

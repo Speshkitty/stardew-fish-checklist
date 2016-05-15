@@ -59,14 +59,10 @@ function combineFishAndLocations() {
 }
 
 function renderFish() {
-  var docFrag = document.createDocumentFragment();
-  fishes.forEach(function(fish) {
-    var el = document.createElement('fish-component');
-    el.setAttribute('name', fish.name);
-    el.setAttribute('locations', JSON.stringify(fish.locations));
-    docFrag.appendChild(el);
-  });
-  document.getElementById('app').appendChild(docFrag);
+
+  var fishTank = document.createElement('fish-tank-component');
+  fishTank.setAttribute('fishes', JSON.stringify(fishes));
+  document.getElementById('app').appendChild(fishTank);
 }
 
 var fishes, fishLocations;
