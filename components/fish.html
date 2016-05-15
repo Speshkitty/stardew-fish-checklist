@@ -21,6 +21,9 @@
                 display: block;
                 margin: 0 auto;
             }
+            .fishImg.rotated {
+                transform: rotate(45deg);
+            }
             .locations {
                 background: rgba(255,255,255,0.9);
                 border: 1px solid #ccc;
@@ -40,7 +43,7 @@
             }
         </style>
 
-        <img class="fishImg" src="./images/fish/{{id}}.png" />
+        <img class$="fishImg {{rotatedClass}}" src="./images/fish/{{id}}.png" />
         <span>{{name}}</span>
         <div class="locations">
             <template is="dom-repeat" items="{{locations}}">
@@ -64,7 +67,18 @@
         properties: {
             id: Number,
             name: String,
-            locations: Array
+            locations: Array,
+            rotated: {
+                type: Boolean,
+                notify: true
+            },
+            rotatedClass: {
+                type: String,
+                computed: 'computeRotationClass(rotated)'
+            }
+        },
+        computeRotationClass: function(rotated) {
+            return rotated ? 'rotated' : '';
         }
     });
 </script>

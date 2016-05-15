@@ -68,7 +68,11 @@
                           items="{{fishes}}"
                           as="fish"
                           filter="{{computeFilter(isSpring, isSummer, isFall, isWinter, isSunny, isRainy)}}">
-                    <fish-component id="{{fish.id}}" name="{{fish.name}}" locations="{{fish.locations}}"></fish-component>
+                    <fish-component
+                        id="{{fish.id}}"
+                        name="{{fish.name}}"
+                        rotated="{{fish.rotated}}"
+                        locations="{{fish.locations}}"></fish-component>
                 </template>
             </div>
         </div>
