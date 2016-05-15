@@ -12,11 +12,24 @@
             .labels {
                 background: #efefef;
                 border: 1px solid #999;
-                padding: 0.5em;
+                margin-bottom: 1rem;
+                padding: 0.5rem;
+            }
+            fieldset {
+                border: 1px solid #ccc;
+                display: inline-block;
+            }
+            input {
+                display: none;
             }
             label {
-                padding: 2px;
+                padding: 1rem;
                 cursor: pointer;
+                display: inline-block;
+            }
+            input:checked + label {
+                background: #fff;
+                font-weight: bold;
             }
             .wrapper {
                 background: #62584B;
@@ -25,24 +38,36 @@
             }
             .tank {
                 background: #307AAD;
-                box-shadow: 0px 3px 3px 1px #333 inset;
-                padding: 0.5em;
+                box-shadow: 0px 3px 3px 2px #333 inset;
+                padding: 0.5rem;
                 text-align: center;
             }
         </style>
 
         <div class="labels">
-            <label>Spring <input checked="{{isSpring::change}}" type="checkbox"></label>
-            <label>Summer <input checked="{{isSummer::change}}" type="checkbox"></label>
-            <label>Fall <input checked="{{isFall::change}}" type="checkbox"></label>
-            <label>Winter <input checked="{{isWinter::change}}" type="checkbox"></label>
+            <fieldset>
+                <input id="isSpring" checked="{{isSpring::change}}" type="checkbox" />
+                <label for="isSpring">Spring</label>
+                <input id="isSummer" checked="{{isSummer::change}}" type="checkbox" />
+                <label for="isSummer">Summer</label>
+                <input id="isFall" checked="{{isFall::change}}" type="checkbox" />
+                <label for="isFall">Fall</label>
+                <input id="isWinter" checked="{{isWinter::change}}" type="checkbox">
+                <label for="isWinter">Winter</label>
+            </fieldset>
+            <fieldset>
+                <input id="isSunny" checked="{{isSunny::change}}" type="checkbox" />
+                <label for="isSunny">Sunny</label>
+                <input id="isRainy" checked="{{isRainy::change}}" type="checkbox">
+                <label for="isRainy">Raining</label>
+            </fieldset>
         </div>
         <div class="wrapper">
             <div class="tank">
                 <template is="dom-repeat"
                           items="{{fishes}}"
                           as="fish"
-                          filter="{{computeFilter(isSpring, isSummer, isFall, isWinter)}}">
+                          filter="{{computeFilter(isSpring, isSummer, isFall, isWinter, isSunny, isRainy)}}">
                     <fish-component id="{{fish.id}}" name="{{fish.name}}" locations="{{fish.locations}}"></fish-component>
                 </template>
             </div>
@@ -70,26 +95,33 @@
             isWinter: {
                 value: false,
                 notify: true
+            },
+            isRainy: {
+                value: false,
+                notify: true
+            },
+            isSunny: {
+                value: false,
+                notify: true
             }
         },
-        computeFilter: function(isSpring, isSummer, isFall, isWinter) {
+        computeFilter: function(isSpring, isSummer, isFall, isWinter, isSunny, isRainy) {
 
             let isFilteringSeason = (isSpring || isSummer || isFall || isWinter);
-            if (!isFilteringSeason) {
+            let isFilteringWeather = isSunny !== isRainy;
+            if (!isFilteringSeason && !isFilteringWeather) {
                 // If we aren't filtering anything, return null, which returns the full set.
                 return null;
             }
 
             return function (fish) {
-                return fish.locations.some(function({ summer, winter, fall, spring }) {
+                return fish.locations.some(function({ summer, winter, fall, spring, weather }) {
 
-                    let inSeason = (summer && isSummer) || (winter && isWinter) || (fall && isFall) || (spring && isSpring);
+                    let inSeason = (summer && isSummer) || (winter && isWinter) || (fall && isFall) || (spring && isSpring) || !isFilteringSeason;
+                    let inWeather = (isSunny && weather === 'Sunny') || (isRainy && weather === 'Rainy') || !isFilteringWeather;
 
-                    if (inSeason) {
-                        return true;
-                    }
 
-                    return false;
+                    return inSeason && inWeather;
                 });
             }
         }
