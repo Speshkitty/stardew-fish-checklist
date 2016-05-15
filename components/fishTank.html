@@ -6,25 +6,47 @@
 <dom-module id="fish-tank-component">
     <template>
         <style>
+            :host {
+
+            }
+            .labels {
+                background: #efefef;
+                border: 1px solid #999;
+                padding: 0.5em;
+            }
             label {
-                border: 1px solid #efefef;
                 padding: 2px;
                 cursor: pointer;
             }
+            .wrapper {
+                background: #62584B;
+                display: block;
+                padding: 0.5em;
+            }
+            .tank {
+                background: #307AAD;
+                box-shadow: 0px 3px 3px 1px #333 inset;
+                padding: 0.5em;
+                text-align: center;
+            }
         </style>
 
-        <div>
+        <div class="labels">
             <label>Spring <input checked="{{isSpring::change}}" type="checkbox"></label>
             <label>Summer <input checked="{{isSummer::change}}" type="checkbox"></label>
             <label>Fall <input checked="{{isFall::change}}" type="checkbox"></label>
             <label>Winter <input checked="{{isWinter::change}}" type="checkbox"></label>
         </div>
-        <template is="dom-repeat"
-                  items="{{fishes}}"
-                  as="fish"
-                  filter="{{computeFilter(isSpring, isSummer, isFall, isWinter)}}">
-            <fish-component name="{{fish.name}}" locations="{{fish.locations}}"></fish-component>
-        </template>
+        <div class="wrapper">
+            <div class="tank">
+                <template is="dom-repeat"
+                          items="{{fishes}}"
+                          as="fish"
+                          filter="{{computeFilter(isSpring, isSummer, isFall, isWinter)}}">
+                    <fish-component id="{{fish.id}}" name="{{fish.name}}" locations="{{fish.locations}}"></fish-component>
+                </template>
+            </div>
+        </div>
     </template>
 </dom-module>
 

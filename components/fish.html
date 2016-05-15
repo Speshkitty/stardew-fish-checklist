@@ -6,10 +6,9 @@
         <style>
 
             :host {
-                border: 1px solid #ccc;
                 cursor: pointer;
                 display: inline-block;
-                height: 4em;
+                height: 5em;
                 width: 8em;
 
                 margin: 0.5em;
@@ -18,22 +17,30 @@
                 vertical-align: top;
                 word-wrap: break-word;
             }
+            .fishImg {
+                display: block;
+                margin: 0 auto;
+            }
             .locations {
-                background: #fff;
+                background: rgba(255,255,255,0.9);
                 border: 1px solid #ccc;
                 box-shadow: 2px 2px 2px #666;
                 display: none;
-                padding: 0.5em;
                 position: absolute;
                 z-index: 2;
-                top: 2em;
+                top: 3em;
                 left: 1em;
+            }
+
+            :host:hover {
+                background: rgba(0,0,0,0.2);
             }
             :host:hover .locations {
                 display: block;
             }
         </style>
 
+        <img class="fishImg" src="./images/fish/{{id}}.png" />
         <span>{{name}}</span>
         <div class="locations">
             <template is="dom-repeat" items="{{locations}}">
@@ -55,6 +62,7 @@
     Polymer({
         is: 'fish-component',
         properties: {
+            id: Number,
             name: String,
             locations: Array
         }
