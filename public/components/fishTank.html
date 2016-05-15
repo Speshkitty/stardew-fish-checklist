@@ -5,22 +5,25 @@
 <!-- Defines element markup -->
 <dom-module id="fish-tank-component">
     <template>
-        <style></style>
+        <style>
+            label {
+                border: 1px solid #efefef;
+                padding: 2px;
+                cursor: pointer;
+            }
+        </style>
 
         <div>
-            <label>
-                Summer
-                <input value="false" checked="{{isSummer::change}}" type="checkbox">
-            </label>
-            <label>
-                Winter
-                <input value="false" checked="{{isWinter::change}}" type="checkbox">
-            </label>
+            <label>Spring <input checked="{{isSpring::change}}" type="checkbox"></label>
+            <label>Summer <input checked="{{isSummer::change}}" type="checkbox"></label>
+            <label>Fall <input checked="{{isFall::change}}" type="checkbox"></label>
+            <label>Winter <input checked="{{isWinter::change}}" type="checkbox"></label>
         </div>
-        <template is="dom-repeat" items="{{fishes}}" as="fish" filter="{{computeFilter(isSummer, isWinter)}}">
-            <fish-component
-                name="{{fish.name}}"
-                locations="{{fish.locations}}"></fish-component>
+        <template is="dom-repeat"
+                  items="{{fishes}}"
+                  as="fish"
+                  filter="{{computeFilter(isSpring, isSummer, isFall, isWinter)}}">
+            <fish-component name="{{fish.name}}" locations="{{fish.locations}}"></fish-component>
         </template>
     </template>
 </dom-module>
@@ -30,34 +33,37 @@
         is: 'fish-tank-component',
         properties: {
             fishes: Array,
+            isSpring: {
+                value: false,
+                notify: true
+            },
             isSummer: {
                 value: false,
                 notify: true
             },
-
-            // I ran into a peculiar bug where changing isWinter using the input did not do anything until isSummer
-            // changed. The "Fix" involves using the notify flag to setup 2-way binding.
-            // Checkout: https://www.polymer-project.org/1.0/docs/devguide/data-binding.html#two-way-native
+            isFall: {
+                value: false,
+                notify: true
+            },
             isWinter: {
                 value: false,
                 notify: true
             }
         },
-        computeFilter: function(isSummer, isWinter) {
+        computeFilter: function(isSpring, isSummer, isFall, isWinter) {
 
-            // If we aren't filtering anything, return null, which returns the full set.
-            if (!isSummer && !isWinter) {
+            let isFilteringSeason = (isSpring || isSummer || isFall || isWinter);
+            if (!isFilteringSeason) {
+                // If we aren't filtering anything, return null, which returns the full set.
                 return null;
             }
 
-            // Otherwise, filter away!
             return function (fish) {
-                return fish.locations.some(function(location) {
-                    if (location.summer && isSummer) {
-                        return true;
-                    }
+                return fish.locations.some(function({ summer, winter, fall, spring }) {
 
-                    if (location.winter && isWinter) {
+                    let inSeason = (summer && isSummer) || (winter && isWinter) || (fall && isFall) || (spring && isSpring);
+
+                    if (inSeason) {
                         return true;
                     }
 
