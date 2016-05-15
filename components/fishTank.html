@@ -69,9 +69,11 @@
                           as="fish"
                           filter="{{computeFilter(isSpring, isSummer, isFall, isWinter, isSunny, isRainy)}}">
                     <fish-component
+                        on-click="toggleFish"
                         id="{{fish.id}}"
                         name="{{fish.name}}"
                         rotated="{{fish.rotated}}"
+                        caught="{{fish.caught}}"
                         locations="{{fish.locations}}"></fish-component>
                 </template>
             </div>
@@ -83,7 +85,10 @@
     Polymer({
         is: 'fish-tank-component',
         properties: {
-            fishes: Array,
+            fishes: {
+                type: Array,
+                notify: true
+            },
             isSpring: {
                 value: false,
                 notify: true
@@ -108,6 +113,18 @@
                 value: false,
                 notify: true
             }
+        },
+        toggleFish: function(event) {
+
+            let id = event.currentTarget.id;
+            let updateIndex = 0;
+            let fish = this.fishes.find(function(fish, index){
+                updateIndex = index;
+                return (fish.id === id);
+            });
+            let update = 'fishes.' + updateIndex + '.caught';
+            this.set(update, !fish.caught);
+
         },
         computeFilter: function(isSpring, isSummer, isFall, isWinter, isSunny, isRainy) {
 

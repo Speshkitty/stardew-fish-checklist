@@ -8,10 +8,10 @@
             :host {
                 cursor: pointer;
                 display: inline-block;
-                height: 5em;
-                width: 8em;
+                height: 5rem;
+                width: 6rem;
 
-                margin: 0.5em;
+                margin: 0.5rem;
                 position: relative;
                 text-align: center;
                 vertical-align: top;
@@ -24,6 +24,9 @@
             .fishImg.rotated {
                 transform: rotate(45deg);
             }
+            .fishImg.caught {
+                opacity: 0.1;
+            }
             .locations {
                 background: rgba(255,255,255,0.9);
                 border: 1px solid #ccc;
@@ -31,8 +34,8 @@
                 display: none;
                 position: absolute;
                 z-index: 2;
-                top: 3em;
-                left: 1em;
+                top: 4rem;
+                left: 1rem;
             }
 
             :host:hover {
@@ -41,9 +44,12 @@
             :host:hover .locations {
                 display: block;
             }
+            fish-location-component:nth-child(even) {
+                border-top: 1px solid #ccc;
+            }
         </style>
 
-        <img class$="fishImg {{rotatedClass}}" src="./images/fish/{{id}}.png" />
+        <img class$="fishImg {{rotatedClass}} {{caughtClass}}" src="./images/fish/{{id}}.png" />
         <span>{{name}}</span>
         <div class="locations">
             <template is="dom-repeat" items="{{locations}}">
@@ -68,6 +74,10 @@
             id: Number,
             name: String,
             locations: Array,
+            caught: {
+                type: Boolean,
+                notify: true
+            },
             rotated: {
                 type: Boolean,
                 notify: true
@@ -75,10 +85,17 @@
             rotatedClass: {
                 type: String,
                 computed: 'computeRotationClass(rotated)'
+            },
+            caughtClass: {
+                type: String,
+                computed: 'computeCaughtClass(caught)'
             }
         },
         computeRotationClass: function(rotated) {
             return rotated ? 'rotated' : '';
+        },
+        computeCaughtClass: function(caught) {
+            return caught ? 'caught' : '';
         }
     });
 </script>
