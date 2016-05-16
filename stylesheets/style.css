@@ -13,3 +13,9 @@ h1 {
 a {
   color: #00B7FF;
 }
+
+@media (max-width: 400px) {
+  .github-ribbon {
+    display: none;
+  }
+}
