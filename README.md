@@ -1,8 +1,8 @@
-# Stardew Fishlist
+# [Stardew Fish Checklist](http://theirondeveloper.com/stardew-fish-checklist/)
 
 This is a simple polymer webapp that displays some helpful information for the game [Stardew Valley](http://stardewvalley.net/) (by ConcernedApe).
 
-[Live Webapp Here](http://theirondeveloper.com/stardew-fishlist/)
+[Live Webapp Here](http://theirondeveloper.com/stardew-fish-checklist/)
 
 Nearly all the data came from [this spreadsheet](https://docs.google.com/spreadsheets/d/1Cr7p-d7OTLz3AMOB8vbU9bWvFWHmp7Evzm5RWaZr7vM/)
 And all the image assets were pulled from [the stardew wiki](http://stardewvalleywiki.com/Fish)
