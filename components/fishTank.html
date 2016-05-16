@@ -122,8 +122,14 @@
                 updateIndex = index;
                 return (fish.id === id);
             });
+            let newValue = !fish.caught;
             let update = 'fishes.' + updateIndex + '.caught';
-            this.set(update, !fish.caught);
+
+            let caughtMap = JSON.parse(localStorage.getItem('caughtMap') || '{}');
+            caughtMap[fish.id] = newValue;
+            localStorage.setItem('caughtMap', JSON.stringify(caughtMap));
+
+            this.set(update, newValue);
 
         },
         computeFilter: function(isSpring, isSummer, isFall, isWinter, isSunny, isRainy) {

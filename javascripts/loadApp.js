@@ -45,6 +45,9 @@ function saveFishLocations(response) {
 }
 
 function combineFishAndLocations() {
+
+  var caughtMap = JSON.parse(localStorage.getItem('caughtMap') || '{}');
+
   var fishLocationMap = fishLocations.reduce(function(memo, fishLocation) {
     if (!memo[fishLocation.fish_id]) {
       memo[fishLocation.fish_id] = [];
@@ -53,6 +56,13 @@ function combineFishAndLocations() {
     return memo;
   }, {});
   fishes = fishes.map(function(fish) {
+
+    // We are expecting caughtMap[fish.id] to be true, false... normally I could check existance before
+    // assigning fish.caught, but false is falsey..
+    if (typeof caughtMap[fish.id] !== 'undefined') {
+      fish.caught = caughtMap[fish.id];
+    }
+
     fish.locations = fishLocationMap[fish.id];
     return fish;
   });
