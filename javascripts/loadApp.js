@@ -35,16 +35,10 @@ function loadFishLocations() {
   });
 }
 
-function saveFishesAndLoadLocations(response) {
-  fishes = response;
-  return loadFishLocations();
-}
+function combineFishAndLocations(responses) {
 
-function saveFishLocations(response) {
-  fishLocations = response;
-}
-
-function combineFishAndLocations() {
+  let fishes = responses[0];
+  let fishLocations = responses[1];
 
   var caughtMap = JSON.parse(localStorage.getItem('caughtMap') || '{}');
 
@@ -66,9 +60,11 @@ function combineFishAndLocations() {
     fish.locations = fishLocationMap[fish.id];
     return fish;
   });
+
+  return fishes;
 }
 
-function renderFish() {
+function renderFish(fishes) {
 
   var fishTank = document.createElement('fish-tank-component');
   fishTank.setAttribute('fishes', JSON.stringify(fishes));
@@ -77,8 +73,6 @@ function renderFish() {
 
 var fishes, fishLocations;
 
-loadFishes()
-  .then(saveFishesAndLoadLocations)
-  .then(saveFishLocations)
+Promise.all([loadFishes(), loadFishLocations()])
   .then(combineFishAndLocations)
   .then(renderFish);
