@@ -1,5 +1,5 @@
 [
-{"id":1,"name":"Albacore","imageUrl":"","rotated": true,"bundle":""},
+{"id":1,"name":"Albacore","imageUrl":"1","rotated": true,"bundle":""},
 {"id":2,"name":"Anchovy","imageUrl":"","rotated": true,"bundle":""},
 {"id":3,"name":"Angler","imageUrl":"","rotated": false,"bundle":""},
 {"id":4,"name":"Bream","imageUrl":"","rotated": true,"bundle":"Night Fishing Bundle"},
